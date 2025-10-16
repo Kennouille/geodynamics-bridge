@@ -36,6 +36,18 @@ app.post("/api/geodynamics/checkin", async (req, res) => {
   // Exemple d’URL de l’API (endpoint réel à confirmer avec ton compte)
   const apiUrl = "https://api.intellitracer.be/api/v2/timeclock/start";
 
+  console.log("🔐 Headers d'authentification:", {
+    "Authorization": `Basic ${encodedAuth}`,
+    "Content-Type": "application/json",
+  });
+  console.log("🌐 URL appelée:", apiUrl);
+  console.log("📦 Payload envoyé:", {
+    userId: employeeId,
+    timestamp,
+    latitude: lat,
+    longitude: lon,
+  });
+
   try {
     // Requête vers Geodynamics
     const response = await fetch(apiUrl, {
@@ -92,6 +104,18 @@ app.post("/api/geodynamics/checkout", async (req, res) => {
 
   // endpoint de sortie
   const apiUrl = "https://api.intellitracer.be/api/v2/timeclock/stop";
+
+  console.log("🔐 Headers d'authentification:", {
+    "Authorization": `Basic ${encodedAuth}`,
+    "Content-Type": "application/json",
+  });
+  console.log("🌐 URL appelée:", apiUrl);
+  console.log("📦 Payload envoyé:", {
+    userId: employeeId,
+    timestamp,
+    latitude: lat,
+    longitude: lon,
+  });
 
   try {
     const response = await fetch(apiUrl, {
