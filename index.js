@@ -31,7 +31,7 @@ app.post("/api/geodynamics/checkin", async (req, res) => {
   const rawAuth = `${process.env.GD_USER}|${process.env.GD_COMPANY}:${process.env.GD_PASS}`;
   const encodedAuth = Buffer.from(rawAuth).toString("base64");
 
-  const apiUrl = "https://api.intellitracer.be/api/v2/clockings";
+  const apiUrl = "https://api.intellitracer.be/api/v2/clocking";
 
   console.log("🔐 Headers d'authentification:", {
     "Authorization": `Basic ${encodedAuth}`,
@@ -39,9 +39,10 @@ app.post("/api/geodynamics/checkin", async (req, res) => {
   });
   console.log("🌐 URL appelée:", apiUrl);
   console.log("📦 Payload envoyé:", {
-    userId: employeeId,
-    vehicleId: vehicleId || "456",
-    timestamp,
+    ClockingType: "1",
+    UserCode: employeeId,
+    VehicleCode: vehicleId || "456",
+    DateTimeUtc: timestamp,
   });
 
   try {
@@ -53,11 +54,11 @@ app.post("/api/geodynamics/checkin", async (req, res) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          ClockingType: "1", // 1 = Start work
-          UserCode: employeeId,
-          VehicleCode: vehicleId || "456",
-          DateTimeUtc: timestamp,
-        }),
+        ClockingType: "1", // 1 = Start work
+        UserCode: employeeId,
+        VehicleCode: vehicleId || "456",
+        DateTimeUtc: timestamp,
+      }),
     });
 
     console.log("📡 Réponse Geodynamics - Status:", response.status);
@@ -98,7 +99,7 @@ app.post("/api/geodynamics/checkout", async (req, res) => {
   const rawAuth = `${process.env.GD_USER}|${process.env.GD_COMPANY}:${process.env.GD_PASS}`;
   const encodedAuth = Buffer.from(rawAuth).toString("base64");
 
-  const apiUrl = "https://api.intellitracer.be/api/v2/clockings";
+  const apiUrl = "https://api.intellitracer.be/api/v2/clocking";
 
   console.log("🔐 Headers d'authentification:", {
     "Authorization": `Basic ${encodedAuth}`,
@@ -106,9 +107,10 @@ app.post("/api/geodynamics/checkout", async (req, res) => {
   });
   console.log("🌐 URL appelée:", apiUrl);
   console.log("📦 Payload envoyé:", {
-    userId: employeeId,
-    vehicleId: vehicleId || "456",
-    timestamp,
+    ClockingType: "2",
+    UserCode: employeeId,
+    VehicleCode: vehicleId || "456",
+    DateTimeUtc: timestamp,
   });
 
   try {
@@ -119,11 +121,11 @@ app.post("/api/geodynamics/checkout", async (req, res) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-          ClockingType: "2", // 2 = Stop work
-          UserCode: employeeId,
-          VehicleCode: vehicleId || "456",
-          DateTimeUtc: timestamp,
-        }),
+        ClockingType: "2", // 2 = Stop work
+        UserCode: employeeId,
+        VehicleCode: vehicleId || "456",
+        DateTimeUtc: timestamp,
+      }),
     });
 
     console.log("📡 Réponse Geodynamics - Status:", response.status);
