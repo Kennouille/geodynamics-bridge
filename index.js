@@ -48,13 +48,13 @@ app.post("/api/geodynamics/checkin", async (req, res) => {
   try {
     // Requête vers Geodynamics
     const response = await fetch(apiUrl, {
-      method: "POST",
+      method: "PUT", // ⬅️ CHANGER POST EN PUT
       headers: {
         "Authorization": `Basic ${encodedAuth}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ClockingType: "1", // 1 = Start work
+        ClockingType: "1", // ou "2" pour checkout
         UserCode: employeeId,
         VehicleCode: vehicleId || "456",
         DateTimeUtc: timestamp,
@@ -115,13 +115,13 @@ app.post("/api/geodynamics/checkout", async (req, res) => {
 
   try {
     const response = await fetch(apiUrl, {
-      method: "POST",
+      method: "PUT", // ⬅️ CHANGER POST EN PUT
       headers: {
         "Authorization": `Basic ${encodedAuth}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ClockingType: "2", // 2 = Stop work
+        ClockingType: "1", // ou "2" pour checkout
         UserCode: employeeId,
         VehicleCode: vehicleId || "456",
         DateTimeUtc: timestamp,
